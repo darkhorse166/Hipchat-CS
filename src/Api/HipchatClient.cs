@@ -102,6 +102,8 @@ namespace HipchatApiV2
             }
         }
         #endregion
+
+        #region GenerateToken
         /// <summary>
         /// Gets an OAuth token for requested grant type. 
         /// </summary>
@@ -170,6 +172,7 @@ namespace HipchatApiV2
             }
 
         }
+        #endregion
 
         #region GetAllUsers
 
@@ -233,7 +236,7 @@ namespace HipchatApiV2
                 try
                 {
 
-                    HipchatEndpoints.UpdateRoomEndpoingFormat.Fmt(roomName)
+                    HipchatEndpoints.UpdateRoomEndpointFormat.Fmt(roomName)
                         .AddHipchatAuthentication()
                         .PutJsonToUrl(data: request, responseFilter: r =>
                         {
