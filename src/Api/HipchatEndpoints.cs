@@ -18,6 +18,7 @@ namespace HipchatApiV2
 
         public static readonly string UpdateRoomEndpoingFormat = "https://api.hipchat.com/v2/room/{0}";
         public static readonly string GetAllUsersEndpoint = "https://api.hipchat.com/v2/user";
+        public static readonly string GetAllMembersEndpointFormat = "https://api.hipchat.com/v2/room/{0}/member";
         public static readonly string SetTopicEnpdointFormat = "https://api.hipchat.com/v2/room/{0}/topic";
     }
 }

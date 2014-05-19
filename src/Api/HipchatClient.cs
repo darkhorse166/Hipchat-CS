@@ -756,5 +756,57 @@ namespace HipchatApiV2
         }
 
         #endregion
+
+        #region GetAllMembers
+        /// <summary>
+        /// Gets all members for this private room
+        /// </summary>
+        /// <param name="roomId">The id of the room</param>
+        /// <param name="startIndex">The start index for the result set</param>
+        /// <param name="maxResults">The maximum number of results</param>
+        /// <returns>A HipchatGetAllMembers response</returns>
+        /// <remarks>
+        /// Auth required with scope 'admin_room'. https://www.hipchat.com/docs/apiv2/method/get_all_members
+        /// </remarks>
+        public HipchatGetAllMembersResponse GetAllMembers(int roomId, int startIndex = 0, int maxResults = 100)
+        {
+            return GetAllMembers(roomId.ToString(CultureInfo.InvariantCulture), startIndex, maxResults);
+        }
+
+        /// <summary>
+        /// Gets all members for this private room
+        /// </summary>
+        /// <param name="roomName">The name of the room</param>
+        /// <param name="startIndex">The start index for the result set</param>
+        /// <param name="maxResults">The maximum number of results</param>
+        /// <returns>A HipchatGetAllMembers response</returns>
+        /// <remarks>
+        /// Auth required with scope 'admin_room'. https://www.hipchat.com/docs/apiv2/method/get_all_members
+        /// </remarks>
+        public HipchatGetAllMembersResponse GetAllMembers(string roomName, int startIndex = 0, int maxResults = 100)
+        {
+            using (JsonSerializerConfigScope())
+            {
+                if (roomName.IsEmpty() || roomName.Length > 100)
+                    throw new ArgumentOutOfRangeException(roomName, "Valid Lengths of roomName is 1 to 100 characters.");
+                try
+                {
+                    return HipchatEndpoints.GetAllMembersEndpointFormat.Fmt(roomName)
+                        .AddHipchatAuthentication()
+                        .AddQueryParam("start-index", startIndex)
+                        .AddQueryParam("max-results", maxResults)
+                        .GetJsonFromUrl()
+                        .FromJson<HipchatGetAllMembersResponse>();
+                }
+                catch (Exception exception)
+                {
+                    if (exception is WebException)
+                        throw ExceptionHelpers.WebExceptionHelper(exception as WebException, "admin_room");
+
+                    throw ExceptionHelpers.GeneralExceptionHelper(exception, "GetAllMembers");
+                }
+            }
+        }
+        #endregion
     }
 }
