@@ -26,6 +26,7 @@ Finished Methods
 - CreateWebHook
 - GetAllWebhooks
 - GetAllUsers
+- GetAllMembers
 
 All methods have several optional paramaters and or overloads, fully documented.  Check intellisense.
 
